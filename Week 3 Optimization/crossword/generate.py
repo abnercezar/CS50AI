@@ -1,4 +1,5 @@
 import sys
+from itertools import chain, product
 
 from crossword import *
 
@@ -14,6 +15,9 @@ class CrosswordCreator():
             var: self.crossword.words.copy()
             for var in self.crossword.variables
         }
+        self.arcs = [] # Inicianiza 'self.arcs'
+        self.neighbors = {} # Inicializa 'self.neighbors'
+
 
     def letter_grid(self, assignment):
         """
@@ -99,7 +103,21 @@ class CrosswordCreator():
         (Remove any values that are inconsistent with a variable's unary
          constraints; in this case, the length of the word.)
         """
-        raise NotImplementedError
+        for variable in self.crossword.variables:
+            # Crie um novo conjunto para armazenar palavras para remover
+            words_to_remove = set()
+
+            # Verifica cada palavra no domínio da variável
+            for word in self.domains[variable]:
+
+                # Se o comprimento da palavra não for igual ao comprimento de variável
+                # adicione a palavra ao conjunto de palavras  aserem removidas
+                if len(word) != variable.length:
+                    words_to_remove.add(word)
+
+            # Remoeve todas as palavras do conjunto do domínio da variável
+            self.domains[variable] -= words_to_remove
+
 
     def revise(self, x, y):
         """
@@ -110,7 +128,23 @@ class CrosswordCreator():
         Return True if a revision was made to the domain of `x`; return
         False if no revision was made.
         """
-        raise NotImplementedError
+        values_to_remove = set()
+
+        # Iterar sobre cda valor em self.domains[x]
+        for value in self.domains[x]:
+
+            # Verifica se existe algum valor em self.domains[y] que satisfaça a restrição binária com valor
+            if not any(value == y_value for y_value in self.domains[y]):
+
+                # Caso contrário, adicione valor ao conjunto de valores a serem removidos
+                values_to_remove.add(value)
+
+        # Remova os valores de self.domains[x]
+        self.domains[x] -= values_to_remove
+
+        # Retorna True se algum valor foi removido, False caso contrário
+        return bool(values_to_remove)
+
 
     def ac3(self, arcs=None):
         """
@@ -121,21 +155,88 @@ class CrosswordCreator():
         Return True if arc consistency is enforced and no domains are empty;
         return False if one or more domains end up empty.
         """
-        raise NotImplementedError
+        # Se arcs for None, inicialize-o com todos os arcos possíveis no problema
+        if arcs is None:
+            arcs = self.arcs
+
+        for arc in arcs:
+            variable1, variable2 = arc
+
+        # Crie uma lista de trabalho a partir dos arcos iniciais.
+        work_list = list(arcs)
+        y = None
+
+        # Embora existam arcos na lista de trabalho, destaque o primeiro arco e torne-o consistente
+        while work_list:
+            arc = work_list.pop(0)
+            print(arc)
+            arc = (variable1, variable2)
+            x, y = arc[0], arc[1]
+            if y is None or x != y:
+                for neighbor in self.neighbors[x]:
+                    work_list.append((neighbor, x))
+                if self.revise(x, y):
+
+                        # Se o domínio de x ficar vazio, retorne False
+                        if not self.domains[x]:
+                            return False
+
+                        # Para cada vizinho z de x diferente de y, adicione o arco (z, x) à lista de trabalho.
+                        for z in self.neighbors[x]:
+                            if z != y:
+                                work_list.append((z, x))
+
+            # Se todos os domínios não estiverem vazios, retorne True.
+            return True
 
     def assignment_complete(self, assignment):
         """
         Return True if `assignment` is complete (i.e., assigns a value to each
         crossword variable); return False otherwise.
         """
-        raise NotImplementedError
+        # Itere sobre cada variável nas palavras cruzadas
+        for variable in self.crossword.variables:
+
+            # Se a variável não receber um valor na atribuição, retorne False
+            if variable not in assignment:
+                return False
+
+        # Se todas as varíaveis receberem um valor na atribuição, retorne True
+        return True
+
 
     def consistent(self, assignment):
         """
         Return True if `assignment` is consistent (i.e., words fit in crossword
         puzzle without conflicting characters); return False otherwise.
         """
-        raise NotImplementedError
+        # Iterar sobre cada um na tarefa
+        for variable in assignment:
+            # Obtém o valor atribuído á variável
+            value = assignment[variable]
+
+            # Itera sobre cada vizinho da variável
+            for neighbor in variable.neighbors:
+                # Se o vizinho não estiver na tarefa, pule-a
+                if neighbor not in assignment:
+                    continue
+
+                # Obtém o valor atribuído ao vizinho
+                neighbor_value = assignment[neighbor]
+
+                # Verifica se os valores atribuídos à variável e ao seu vizinho são iguais
+                if value == neighbor_value:
+                    # Se forem iguais, a atribuição é inconsistente
+                    return False
+
+                # Verifica se os comprimentos dos valores atribuídos á variável e ao seu vizinho são diferentes
+                if len(value) != len(neighbor_value):
+                    # Se os comprimentos forem diferentes, a atribuição é inconsistente
+                    return False
+
+        # Se a função não retornou False, a atribuição é consistente
+                return True
+
 
     def order_domain_values(self, var, assignment):
         """
@@ -144,7 +245,35 @@ class CrosswordCreator():
         The first value in the list, for example, should be the one
         that rules out the fewest values among the neighbors of `var`.
         """
-        raise NotImplementedError
+        # Crie um dicionário para armazenar o número de valores descartados por cada valor de domínio
+        values_to_count = {}
+
+        # Itera sobre cada valor no domínio de 'var'
+        for value in var.domain:
+
+            # Inicializa a contagem de valores descartados para 0
+            count = 0
+
+            # Itera sobre cada vizinho de 'var'
+            for neighbor in var.neighbors:
+                # Se o vizinho não estiver na atribuição, ainda não foi atribuído um valor
+                if neighbor not in assignment:
+                    # Itera sobre cada valor no domínio do vizinho
+                    for neighbor_value in self.crossword.domains[neighbor]:
+                        # Se o vizinho puder assumir o valor atual e o valor atual não for o valor de 'var'
+                        if self.crossword.overlaps[(var.index, neighbor.index)] == value or self.crossword.overlaps[(neighbor.index, var.index)] == neighbor_value:
+                            # Se o vizinho não puder assumir o valor atual, aumente a contagem
+                            count += 1
+
+            # Armazena a contagem no dicionário
+            values_to_count[value] = count
+
+        # Classifica as chaves do dicionário pela contagem correspondente em ordem crescente
+        sorted_values = sorted(values_to_count, key=values_to_count.get)
+
+        # Return the sorted list of values
+        return sorted_values
+
 
     def select_unassigned_variable(self, assignment):
         """
@@ -154,7 +283,19 @@ class CrosswordCreator():
         degree. If there is a tie, any of the tied variables are acceptable
         return values.
         """
-        raise NotImplementedError
+        # Cria uma lista de todas as variáveis ​​não atribuídas
+        unassigned_variables = [var for var in self.crossword.variables if var not in assignment]
+
+        # Classifica a lista de variáveis ​​não atribuídas pelo número de valores restantes em seus domínios
+        unassigned_variables.sort(key=lambda var: len(self.domains[var]), reverse=False)
+
+        # Se houver empate, classifique a lista de variáveis ​​​​empatadas pelo seu grau
+        if len(unassigned_variables) > 1:
+            unassigned_variables.sort(key=lambda var: len(self.crossword.neighbors(var)), reverse=True)
+
+        # Retorna a primeira variável da lista ordenada
+        return unassigned_variables[0]
+
 
     def backtrack(self, assignment):
         """
@@ -165,8 +306,33 @@ class CrosswordCreator():
 
         If no assignment is possible, return None.
         """
-        raise NotImplementedError
+        # Se todas as variáveis tiveram um valor atribuído retorne a atribuição
+        if len(assignment) == len(self.crossword.variables):
+            return assignment
 
+        # Selecione uma variável não atribuída
+        var = self.select_unassigned_variable(assignment)
+
+        # Para cada valor no domínio da variável
+        for value in var.domain:
+            # Crie uma cópia da tarefa
+            new_assignment = assignment.copy()
+
+            # Atribua o valor á variável
+            new_assignment[var] = value
+
+            # Se a tarefa for consistente e completa, devolva-a
+            if self.consistent(new_assignment) and self.assignment_complete(new_assignment):
+                return new_assignment
+
+            # Se a tarefa não for consistente ou completa, procure recursivamente por uma solução
+            else:
+                solution = self.backtrack(new_assignment)
+                if solution is not None:
+                    return solution
+
+        # Se nenhum valor para a variável resultar em uma atribuição consistente e completa, retorne None
+        return None
 
 def main():
 
