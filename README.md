@@ -8,7 +8,7 @@ ____
 ## Sobre este curso
 Este curso explora os conceitos e algoritmos que estão na base da inteligência artificial moderna, mergulhando nas ideias que dão origem a tecnologias como motores de jogos, reconhecimento de escrita e tradução automática. Por meio de projetos práticos, os alunos ganham exposição à teoria por trás de algoritmos de busca de gráficos, classificação, otimização, aprendizado de máquina, grandes modelos de linguagem e outros tópicos de inteligência artificial à medida que os incorporam em seus próprios programas Python. Ao final do curso, os alunos adquirem experiência em bibliotecas para aprendizado de máquina, bem como conhecimento dos princípios de inteligência artificial que lhes permitem projetar seus próprios sistemas inteligentes.
 ____
-## Tópicos
+## Aprendizados
 - Algoritmos de pesquisa gráfica
 - Busca adversária
 - Representação do conhecimento
