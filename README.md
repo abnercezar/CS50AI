@@ -21,6 +21,7 @@ ____
 - Aprendizagem por reforço
 - Redes neurais
 - Processamento de linguagem natural
+----
 ![Thisiscs50](https://github.com/abnercezar/CS50x/assets/102832541/05954b62-d45d-4b1e-bac4-52d3c744cf57)
 
 
