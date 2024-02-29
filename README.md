@@ -26,4 +26,4 @@ ____
 
 
 
-Observe que este repositório é para armazenar meus projetos e arquivos do curso CS50x da Universidade de Harvard. Não se destina a compartilhar respostas ou encorajar a desonestidade acadêmica. Se você estiver matriculado no momento, conclua as tarefas de forma independente e consulte os materiais do curso.
+Observe que este repositório é para armazenar meus projetos e arquivos do curso CS50AI da Universidade de Harvard. Não se destina a compartilhar respostas ou encorajar a desonestidade acadêmica. Se você estiver matriculado no momento, conclua as tarefas de forma independente e consulte os materiais do curso.
