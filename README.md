@@ -92,6 +92,8 @@ Uma das principais função deve ser a add_knowledge e ela deverá:
  #### OBS: A depuração é essencial nesta atividade!
 ____
 # Semana 2: Incerteza
+### Pagerank
+### Heredity
 ____
 ![Thisiscs50](https://github.com/abnercezar/CS50x/assets/102832541/05954b62-d45d-4b1e-bac4-52d3c744cf57)
 
