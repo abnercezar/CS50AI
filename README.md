@@ -83,11 +83,11 @@ Dada esta informação, um jogador lógico poderia concluir que deve haver uma m
 
 - Sua principal função é a add_knownledge :
 Esta função deve:
-            *** marque a célula como um movimento que foi feito
-            * marque a célula como segura
-            # adicionar uma nova frase à base de conhecimento da IA com base no valor de `cell` e `count`
-            * marque quaisquer células adicionais como seguras ou como minas se puder ser concluído com base na base de conhecimento da IA
-            * adicionar novas frases à base de conhecimento da IA se eles podem ser inferidos a partir do conhecimento existente
+  1. marque a célula como um movimento que foi feito
+  2. marque a célula como segura
+  3. adicionar uma nova frase à base de conhecimento da IA com base no valor de `cell` e `count`
+  4. marque quaisquer células adicionais como seguras ou como minas se puder ser concluído com base na base de conhecimento da IA
+  5. adicionar novas frases à base de conhecimento da IA se eles podem ser inferidos a partir do conhecimento existente
 
  #### OBS: A depuração é essencial nesta atividade!
 ____
