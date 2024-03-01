@@ -1,5 +1,5 @@
-# CS50AI - 2024
- Inteligência Artificial
+# CS50AI - 2023
+### Introdução do CS50 à Inteligência Artificial com Python
 ![Harvard](https://github.com/abnercezar/CS50x/assets/102832541/96a8e6ab-d1a2-40b0-8b16-21db0b3dbd7e)
 
 ### Site CS50AI: 
