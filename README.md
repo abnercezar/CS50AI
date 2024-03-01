@@ -32,7 +32,7 @@ ____
 - Você deve encontrar o caminho mais curto entre dois nós.
 - Você irá usar o banco de dados do IMDb, e você deverá encontrar como dois atores se conectam no elenco do mesmo filme.
 - A solução é baseada na Pesquisa em Largura (BFS) porque a tarefa requer o caminho mais curto entre os nós
-- Para implementar a pesquisa a fronteira usada é uma fila, e criei um algoritimo de busca em largura que é empregado para encontrar o caminho mais curto no grafo.
+- Para implementar a pesquisa, a fronteira usada é uma fila, e crie um algoritimo de busca em largura que é empregado para encontrar o caminho mais curto no grafo.
 
 
 ____
