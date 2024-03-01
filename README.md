@@ -81,13 +81,13 @@ Dada esta informação, um jogador lógico poderia concluir que deve haver uma m
 
 - O objetivo do jogo é sinalizar (ou seja, identificar) cada uma das minas. Em muitas implementações do jogo, incluindo a deste projeto, o jogador pode sinalizar uma mina clicando com o botão direito em uma célula (ou clicando com dois dedos, dependendo do computador).
 
-### Sua principal função é a add_knowledge :
-#### Esta função deve:
-1. marque a célula como um movimento que foi feito
-2. marque a célula como segura
-3. adicionar uma nova frase à base de conhecimento da IA com base no valor de `cell` e `count`
-4. marque quaisquer células adicionais como seguras ou como minas se puder ser concluído com base na base de conhecimento da IA
-5. adicionar novas frases à base de conhecimento da IA se eles podem ser inferidos a partir do conhecimento existente
+ 
+Uma das principais função deve ser a add_knowledge e ela deverá:
+1. Marcar a célula como um movimento que foi feito
+2. Marcar a célula como segura
+3. Adicionar uma nova frase à base de conhecimento da IA com base no valor de `cell` e `count`
+4. Marcar quaisquer células adicionais como seguras ou como minas se puder ser concluído com base na base de conhecimento da IA
+5. Adicionar novas frases à base de conhecimento da IA se eles podem ser inferidos a partir do conhecimento existente
 
  #### OBS: A depuração é essencial nesta atividade!
 ____
