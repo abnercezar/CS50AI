@@ -44,9 +44,6 @@ Documentação: [Pygame News](https://www.pygame.org/news)
 
 - Usando a função Minimax, que é uma das mais importantes, a IA deve jogar Tic-Tac-Toe de maneira ideal.
 - O tabuleiro é fornecido para você (runner.py), porém é necessário implementar uma função Minimax na sua(tictactoe.py) entre outras não menos importantes. Sua IA deve fazer uma cópia do tabuleiro e calcular todas as possíveis jogadas do seu oponente. Ela pode até permitir que o oponente empate, mas não pode permitir que ele a vença.
-  #### Bug:
-  Não há consistência nos padrões de movimento da sua IA. Certifique-se de revisar as expectativas da especificação.
-  valid_actions, best_move nem sempre são selecionados/implementados corretamente.
   
   #### Lembre-se a depuração é essencial nesta atividade!
 
