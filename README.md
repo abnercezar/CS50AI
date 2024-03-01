@@ -81,7 +81,7 @@ Dada esta informação, um jogador lógico poderia concluir que deve haver uma m
 
 - O objetivo do jogo é sinalizar (ou seja, identificar) cada uma das minas. Em muitas implementações do jogo, incluindo a deste projeto, o jogador pode sinalizar uma mina clicando com o botão direito em uma célula (ou clicando com dois dedos, dependendo do computador).
 
-### Sua principal função é a add_knownledge :
+### Sua principal função é a add_knowledge :
 #### Esta função deve:
 1. marque a célula como um movimento que foi feito
 2. marque a célula como segura
