@@ -136,7 +136,7 @@ class Sentence:
         """
         if cell in self.cells:
             self.cells.remove(cell)
-            
+
     def update(self, marked_cell):
         """
         Remove a célula marcada da contagem da frase
@@ -198,7 +198,7 @@ class MinesweeperAI:
         # Itera sobre todas as sentenças conhecidas e marca a célula como segura nelas
         for sentence in self.knowledge:
             sentence.mark_safe(cell)
-            
+
     def can_mark_as_mine(self, cell):
        """
        Verifica se a célula pode ser marcada como mina com base no conhecimento atual
@@ -215,7 +215,6 @@ class MinesweeperAI:
     def add_knowledge(self, cell, count):
         newSentence = None
         self.count[cell] = count
-        print("Entrou na função add_knowledge")
         """
         Chamado quando o tabuleiro do Campo Minado nos informa, para um determinado
         célula segura, quantas células vizinhas contêm minas.
@@ -231,24 +230,16 @@ class MinesweeperAI:
                se eles podem ser inferidos a partir do conhecimento existente
         """
         # 1. Marca a célula como um movimento feito
-        #print(f"Antes da etapa 1, a base de conhecimento é {self.moves_made}")
         self.moves_made.add(cell)
-        #print("Executando o passo 1")
-        #print(f"Após a etapa 1, a base de conhecimento é {self.moves_made}")
 
         # 2. Marca a célula como segura
-        #print(f"Antes da etapa 2, a nova frase é {cell}")
         self.mark_safe(cell)
-        #print("Executando o passo 2")
-        #print(f"Após o passo 2, a nova frase é {cell}")
 
         undeterminedCells = []
         countMines = 0
 
         # 3. Verifica as células vizinhas
-        #print(f"Antes de verificar os vizinhos, countMines é {countMines} e undeterminedCells é {undeterminedCells}")
         for i in range(cell[0] - 1, cell[0] + 2):
-            #print("Executando o passo 3")
             for j in range(cell[1] - 1, cell[1] + 2):
                 if (i, j) in self.mines:
                     countMines += 1
@@ -261,33 +252,25 @@ class MinesweeperAI:
                     and (i, j) not in self.mines
                 ):
                     undeterminedCells.append((i, j))
-        #print(f"Depois de verificar os vizinhos, countMines é {countMines} e undeterminedCells é {undeterminedCells}")            
 
         # 4. Adiciona uma nova sentença à base de conhecimento do AI
         if len(undeterminedCells) >= count - countMines:
             newSentence = Sentence(undeterminedCells, count - countMines)
-            print(f"Antes da etapa 4, a nova frase é {undeterminedCells, count - countMines}")
-            print("Executando o passo 4")
 
             # Itera sobre as células não determinadas e verifica se pode inferir minas
             for cell in undeterminedCells:
                 if cell not in self.safes and cell not in self.mines:
                     # Verifica se a célula pode ser inferida como uma mina com base na base de conhecimento
                     if all(sentence.mark_mine(cell) for sentence in self.knowledge):
-                        print(f"Marcando a célula {cell} como mina")
                         self.mines.add(cell)
 
-            print(f"Depois da etapa 4, a nova frase é {undeterminedCells, count - countMines}")
 
 
         # Atualiza a base de conhecimento com base na nova informação
         self.knowledge.append(newSentence)
-        print("Atualizando a base de conhecimento com base na nova informação")
-        print(f"Após o passo 4, a nova frase é {newSentence}")
-        
+
         # 5. Marca as minas e células seguras conhecidas em todas as sentenças
         for sentence in self.knowledge:
-            #print("Executando o passo 5")
             if sentence.known_mines():
                 for cell in sentence.known_mines().copy():
                     self.mark_mine(cell)
@@ -296,7 +279,6 @@ class MinesweeperAI:
                     self.mark_safe(cell)
 
         # 6. Verifica se uma sentença é um subconjunto de outra e cria uma nova sentença
-        #print(f"Antes da etapa 6, a nova frase é {newSentence}")
         for sentence in self.knowledge:
             if (
                 newSentence.cells.issubset(sentence.cells)
@@ -309,12 +291,6 @@ class MinesweeperAI:
                     list(newSubset), sentence.count - newSentence.count
                 )
                 self.knowledge.append(newSentenceSubset)
-            #print("Executando o passo 6")
-            #print(f"newSentence.cells.issubset(sentence.cells): {newSentence.cells.issubset(sentence.cells)}")
-            #print(f"frase.contagem > 0: {sentence.count > 0}")
-            #print(f"novaSentence.count > 0: {newSentence.count > 0}")
-            #print(f"novaSentença!= frase: {newSentence.count}")
-            #print(f"Após a etapa 6, a nova frase é {newSentence}")
 
     def make_safe_move(self):
         """
