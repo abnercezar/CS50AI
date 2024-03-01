@@ -26,7 +26,7 @@ ____
 
 # Semana 0: Pesquisa
 ### Graus:
-- Escreva um programa que determine quantos “graus de separação” dois atores estão separados.
+### Escreva um programa que determine quantos “graus de separação” dois atores estão separados.
 ![image](https://github.com/abnercezar/CS50AI/assets/102832541/6a7bc5b5-f974-459f-b928-59de97a78e79)
 
 - Você deve encontrar o caminho mais curto entre dois nós.
