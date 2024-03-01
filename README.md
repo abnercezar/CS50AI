@@ -45,7 +45,7 @@ Documentação: [Pygame News](https://www.pygame.org/news)
 - Usando a função Minimax, que é uma das mais importantes, a IA deve jogar Tic-Tac-Toe de maneira ideal.
 - O tabuleiro é fornecido para você (runner.py), porém é necessário implementar uma função Minimax na sua(tictactoe.py) entre outras não menos importantes. Sua IA deve fazer uma cópia do tabuleiro e calcular todas as possíveis jogadas do seu oponente. Ela pode até permitir que o oponente empate, mas não pode permitir que ele a vença.
   
-  #### Lembre-se a depuração é essencial nesta atividade!
+  #### OBS: A depuração é essencial nesta atividade!
 
   ____
 # Semana 1: Conhecimento
@@ -92,7 +92,7 @@ Esta função deve:
             5) adicionar novas frases à base de conhecimento da IA
                se eles podem ser inferidos a partir do conhecimento existente
 
-### Lembre-se a depuração é essencial nesta atividade!
+ #### OBS: A depuração é essencial nesta atividade!
 ____
 # Semana 2: Incerteza
 ____
