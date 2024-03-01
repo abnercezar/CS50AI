@@ -38,6 +38,7 @@ ____
 ____
 ### Tic-Tac-Toe:
 ![image](https://github.com/abnercezar/CS50AI/assets/102832541/1e5591b6-37ed-48ec-b946-c0e7584014c9)
+
 Para você obter este tabuleiro deverá instalar o Pygame: 
 Documentação: [Pygame News](https://www.pygame.org/news)
 
@@ -72,6 +73,7 @@ Em cada um dos quebra-cabeças acima, cada personagem é um cavaleiro ou um vale
 
 ### Minesweeper:
 ![image](https://github.com/abnercezar/CS50AI/assets/102832541/fd5601a3-3c3a-4c45-9c3e-8bdcbe862e7e)
+
 Para você obter este tabuleiro deverá instalar o Pygame: 
 Documentação: [Pygame News](https://www.pygame.org/news)
 ### Escreva uma IA para jogar o Campo Minado.
