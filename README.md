@@ -21,12 +21,8 @@ ____
 - Aprendizagem por reforço
 - Redes neurais
 - Processamento de linguagem natural
-----
-![Thisiscs50](https://github.com/abnercezar/CS50x/assets/102832541/05954b62-d45d-4b1e-bac4-52d3c744cf57)
+____
 
-
-
-Observe que este repositório é para armazenar meus projetos e arquivos do curso CS50AI da Universidade de Harvard. Não se destina a compartilhar respostas ou encorajar a desonestidade acadêmica. Se você estiver matriculado no momento, conclua as tarefas de forma independente e consulte os materiais do curso.
 
 # Semana 0: Pesquisa
 ### Graus:
@@ -100,3 +96,9 @@ Esta função deve:
 ### Lembre-se a depuração é essencial nesta atividade!
 ____
 # Semana 2: Incerteza
+____
+![Thisiscs50](https://github.com/abnercezar/CS50x/assets/102832541/05954b62-d45d-4b1e-bac4-52d3c744cf57)
+
+
+
+Observe que este repositório é para armazenar meus projetos e arquivos do curso CS50AI da Universidade de Harvard. Não se destina a compartilhar respostas ou encorajar a desonestidade acadêmica. Se você estiver matriculado no momento, conclua as tarefas de forma independente e consulte os materiais do curso.
