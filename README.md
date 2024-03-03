@@ -131,11 +131,44 @@ def iterate_pagerank
     Retorne um dicionário onde as chaves são nomes de páginas e os valores são
     seu valor estimado de PageRank (um valor entre 0 e 1). Todos
     Os valores do PageRank devem somar 1. 
-  
-#### OBS: A depuração é essencial nesta atividade!
+
 ____
 
 ### Heredity
+![image](https://github.com/abnercezar/CS50AI/assets/102832541/a9ab42c1-6835-4e67-966f-435937f502ed)
+
+### Escreva uma IA para avaliar a probabilidade de uma pessoa ter uma característica genética específica.
+
+Para resolver esta tarefa você precisará tarbalhar duramente na função joint_probability
+A joint_probability função deve ter como entrada um dicionário de pessoas, junto com dados sobre quem tem quantas cópias de cada um dos genes e quem apresenta a característica. 
+
+A função deve retornar a probabilidade conjunta de todos esses eventos ocorrerem.
+
+Calcule e retorne uma probabilidade conjunta.
+  A probabilidade retornada deve ser a probabilidade de que
+      * todos no conjunto `one_gene` possuem uma cópia do gene, e
+      * todos no conjunto `two_genes` possuem duas cópias do gene, e
+      * todos que não estão em `one_gene` ou `two_gene` não possuem o gene, e
+      * todos no conjunto `have_trait` possuem a característica, e
+      * todos que não estão no set` have_trait` não possuem a característica. 
+      
+  def inherit_prob:
+     É uma função auxiliar de joint_probability
+     Retorna a probabilidade de um pai dar uma cópia do gene mutado ao filho.
+    Leva:
+    - parent_name - o nome do pai
+    - one_gene - conjunto de pessoas que possuem 1 cópia do gene
+    - two_genes - conjunto de pessoas que possuem duas cópias do gene.
+
+  def update
+    Adicione às `probabilidades` uma nova probabilidade conjunta `p`.
+    Cada pessoa deve ter suas distribuições de “genes” e “características” atualizadas.
+    Qual valor para cada distribuição é atualizado depende se
+    a pessoa está em `have_gene` e `have_trait`, respectivamente.
+
+  def normalize
+    Atualize as `probabilidades` de modo que cada distribuição de probabilidade
+    é normalizado (ou seja, soma 1, com proporções relativas iguais).
 ____
 ![Thisiscs50](https://github.com/abnercezar/CS50x/assets/102832541/05954b62-d45d-4b1e-bac4-52d3c744cf57)
 
