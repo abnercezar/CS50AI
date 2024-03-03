@@ -104,7 +104,8 @@ Mas esta definição não é perfeita: se alguém quiser fazer com que sua pági
 
 Por esse motivo, o algoritmo PageRank foi criado pelos cofundadores do Google (incluindo Larry Page, que deu nome ao algoritmo). No algoritmo do PageRank, um site é mais importante se estiver vinculado a outros sites importantes, e links de sites menos importantes têm menos peso. Esta definição parece um pouco circular, mas acontece que existem múltiplas estratégias para calcular essas classificações.
 
-Para o desenvolvimento deste algoritimo, você precisará desenvolver algumas funções:
+Para o desenvolvimento deste algoritimo, você precisará de algumas funções:
+
 def crawl:
     Analise um diretório de páginas HTML e verifique links para outras páginas.
     Retorne um dicionário onde cada chave é uma página e os valores são
