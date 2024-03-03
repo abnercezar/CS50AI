@@ -118,14 +118,14 @@ def transition_model:
     vinculado por `página`. Com probabilidade `1 - fator de amortecimento`, escolha
     um link escolhido aleatoriamente em todas as páginas do corpus.
 
-def sample_pagerank
+def sample_pagerank:
     Retorne valores de PageRank para cada página amostrando `n` páginas
     de acordo com o modelo de transição, começando com uma página aleatória.
     Retorne um dicionário onde as chaves são nomes de páginas e os valores são
     seu valor estimado de PageRank (um valor entre 0 e 1). Todos
     Os valores do PageRank devem somar 1.
 
-def iterate_pagerank
+def iterate_pagerank:
     Retorne valores de PageRank para cada página atualizando iterativamente
     Valores do PageRank até a convergência.
     Retorne um dicionário onde as chaves são nomes de páginas e os valores são
@@ -160,13 +160,13 @@ Calcule e retorne uma probabilidade conjunta.
     - one_gene - conjunto de pessoas que possuem 1 cópia do gene
     - two_genes - conjunto de pessoas que possuem duas cópias do gene.
 
-  def update
+  def update:
     Adicione às `probabilidades` uma nova probabilidade conjunta `p`.
     Cada pessoa deve ter suas distribuições de “genes” e “características” atualizadas.
     Qual valor para cada distribuição é atualizado depende se
     a pessoa está em `have_gene` e `have_trait`, respectivamente.
 
-  def normalize
+  def normalize:
     Atualize as `probabilidades` de modo que cada distribuição de probabilidade
     é normalizado (ou seja, soma 1, com proporções relativas iguais).
 ____
