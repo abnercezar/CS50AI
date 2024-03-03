@@ -50,7 +50,7 @@ Documentação: [Pygame News](https://www.pygame.org/news)
   ____
 # Semana 1: Conhecimento
   ### Knights:
- - Escreva um programa para resolver quebra-cabeças lógicos.
+ ### Escreva um programa para resolver quebra-cabeças lógicos.
  - Não há necessidade de entender tudo neste arquivo, mas observe que ele define diversas classes para diferentes tipos de conectivos lógicos. Essas classes podem ser compostas umas dentro das outras, portanto, uma expressão como And(Not(A), Or(B, C))representa a sentença lógica afirmando que o símbolo A não é verdadeiro e que o símbolo B ou símbolo C é verdadeiro (onde “ou” aqui se refere a inclusivo, não exclusivo ou).
 - A seguir estão quatro bases de conhecimento diferentes, knowledge0, knowledge1, knowledge2e knowledge3, que conterão o conhecimento necessário para deduzir as soluções para os próximos quebra-cabeças 0, 1, 2 e 3, respectivamente. Observe que, por enquanto, cada uma dessas bases de conhecimento está vazia. É aí que você entra!
 - O quebra-cabeça 0 é o quebra-cabeça do plano de fundo. Ele contém um único caractere, A.
