@@ -93,6 +93,47 @@ Uma das principais função deve ser a add_knowledge e ela deverá:
 ____
 # Semana 2: Incerteza
 ### Pagerank
+![image](https://github.com/abnercezar/CS50AI/assets/102832541/be8bcf94-ef53-4fe3-a152-36112d726c45)
+### Escreva uma IA para classificar as páginas da web por importância.
+
+Quando mecanismos de pesquisa como o Google exibem resultados de pesquisa, eles o fazem colocando páginas mais “importantes” e de maior qualidade em uma posição superior nos resultados de pesquisa do que páginas menos importantes. Mas como o mecanismo de busca sabe quais páginas são mais importantes que outras páginas?
+
+Uma heurística pode ser que uma página “importante” seja aquela para a qual muitas outras páginas têm links, já que é razoável imaginar que mais sites terão links para uma página da Web de qualidade superior do que para uma página da Web de qualidade inferior. Poderíamos, portanto, imaginar um sistema onde cada página recebe uma classificação de acordo com o número de links recebidos de outras páginas, e classificações mais altas sinalizariam maior importância.
+
+Mas esta definição não é perfeita: se alguém quiser fazer com que sua página pareça mais importante, então, sob esse sistema, ele poderia simplesmente criar muitas outras páginas com links para a página desejada para aumentar artificialmente sua classificação.
+
+Por esse motivo, o algoritmo PageRank foi criado pelos cofundadores do Google (incluindo Larry Page, que deu nome ao algoritmo). No algoritmo do PageRank, um site é mais importante se estiver vinculado a outros sites importantes, e links de sites menos importantes têm menos peso. Esta definição parece um pouco circular, mas acontece que existem múltiplas estratégias para calcular essas classificações.
+
+Para o desenvolvimento deste algoritimo, você precisará desenvolver algumas funções:
+def crawl:
+    Analise um diretório de páginas HTML e verifique links para outras páginas.
+    Retorne um dicionário onde cada chave é uma página e os valores são
+    uma lista de todas as outras páginas do corpus vinculadas pela página.
+
+def transition_model:
+    Retornar uma distribuição de probabilidade sobre qual página visitar em seguida,
+    dada uma página atual.
+    Com probabilidade `damping_factor`, escolha um link aleatoriamente
+    vinculado por `página`. Com probabilidade `1 - fator de amortecimento`, escolha
+    um link escolhido aleatoriamente em todas as páginas do corpus.
+
+def sample_pagerank
+    Retorne valores de PageRank para cada página amostrando `n` páginas
+    de acordo com o modelo de transição, começando com uma página aleatória.
+    Retorne um dicionário onde as chaves são nomes de páginas e os valores são
+    seu valor estimado de PageRank (um valor entre 0 e 1). Todos
+    Os valores do PageRank devem somar 1.
+
+def iterate_pagerank
+    Retorne valores de PageRank para cada página atualizando iterativamente
+    Valores do PageRank até a convergência.
+    Retorne um dicionário onde as chaves são nomes de páginas e os valores são
+    seu valor estimado de PageRank (um valor entre 0 e 1). Todos
+    Os valores do PageRank devem somar 1. 
+  
+#### OBS: A depuração é essencial nesta atividade!
+____
+
 ### Heredity
 ____
 ![Thisiscs50](https://github.com/abnercezar/CS50x/assets/102832541/05954b62-d45d-4b1e-bac4-52d3c744cf57)
