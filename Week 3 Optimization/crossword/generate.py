@@ -1,27 +1,25 @@
 import sys
-from itertools import chain, product
 
-from crossword import *
+from crossword import Crossword, Variable
+# from crossword import *
+from collections import deque
 
 
 class CrosswordCreator():
 
     def __init__(self, crossword):
         """
-        Create new CSP crossword generate.
+        Crie uma nova geração de palavras cruzadas CSP.
         """
         self.crossword = crossword
         self.domains = {
             var: self.crossword.words.copy()
             for var in self.crossword.variables
         }
-        self.arcs = [] # Inicianiza 'self.arcs'
-        self.neighbors = {} # Inicializa 'self.neighbors'
-
 
     def letter_grid(self, assignment):
         """
-        Return 2D array representing a given assignment.
+        Retorna uma matriz 2D que representa uma determinada atribuição.
         """
         letters = [
             [None for _ in range(self.crossword.width)]
@@ -37,7 +35,7 @@ class CrosswordCreator():
 
     def print(self, assignment):
         """
-        Print crossword assignment to the terminal.
+        Imprima a atribuição de palavras cruzadas no terminal.
         """
         letters = self.letter_grid(assignment)
         for i in range(self.crossword.height):
@@ -50,7 +48,7 @@ class CrosswordCreator():
 
     def save(self, assignment, filename):
         """
-        Save crossword assignment to an image file.
+        Salve a tarefa de palavras cruzadas em um arquivo de imagem.
         """
         from PIL import Image, ImageDraw, ImageFont
         cell_size = 100
@@ -91,7 +89,7 @@ class CrosswordCreator():
 
     def solve(self):
         """
-        Enforce node and arc consistency, and then solve the CSP.
+        Imponha a consistência do nó e do arco e, em seguida, resolva o CSP.
         """
         self.enforce_node_consistency()
         self.ac3()
@@ -99,240 +97,253 @@ class CrosswordCreator():
 
     def enforce_node_consistency(self):
         """
-        Update `self.domains` such that each variable is node-consistent.
-        (Remove any values that are inconsistent with a variable's unary
-         constraints; in this case, the length of the word.)
+        Atualize `self.domains` de forma que cada variável seja consistente com o nó.
+        (Remova quaisquer valores que sejam inconsistentes com o unário de uma variável
+         restrições; neste caso, o comprimento da palavra.)
         """
-        for variable in self.crossword.variables:
-            # Crie um novo conjunto para armazenar palavras para remover
-            words_to_remove = set()
-
-            # Verifica cada palavra no domínio da variável
-            for word in self.domains[variable]:
-
-                # Se o comprimento da palavra não for igual ao comprimento de variável
-                # adicione a palavra ao conjunto de palavras  aserem removidas
-                if len(word) != variable.length:
-                    words_to_remove.add(word)
-
-            # Remoeve todas as palavras do conjunto do domínio da variável
-            self.domains[variable] -= words_to_remove
-
+        # Para cada variável, filtra os valores e o comprimento
+        for variable in self.domains:
+            self.domains[variable] = {value for value in self.domains[variable]
+                                      if len(value) == variable.length}
 
     def revise(self, x, y):
         """
-        Make variable `x` arc consistent with variable `y`.
-        To do so, remove values from `self.domains[x]` for which there is no
-        possible corresponding value for `y` in `self.domains[y]`.
+        Torne a variável `x` consistente com a variável `y`.
+        Para fazer isso, remova valores de `self.domains[x]` para os quais não há
+        possível valor correspondente para `y` em `self.domains[y]`.
 
-        Return True if a revision was made to the domain of `x`; return
-        False if no revision was made.
+        Retorna True se foi feita uma revisão no domínio de `x`; retornar
+        Falso se nenhuma revisão foi feita.
         """
-        values_to_remove = set()
+        revised = False
+        overlap = self.crossword.overlaps[x, y]
+        if overlap is None:
+            return revised
 
-        # Iterar sobre cda valor em self.domains[x]
-        for value in self.domains[x]:
+        i, j = overlap
 
-            # Verifica se existe algum valor em self.domains[y] que satisfaça a restrição binária com valor
-            if not any(value == y_value for y_value in self.domains[y]):
+        # Cria um conjunto de valores em `self.domains[x]` que tenham um valor correspondente
+        # valor em `self.domains[y]`
+        consistent_values = {
+            x_value for x_value in self.domains[x]
+            if any(y_value for y_value in self.domains[y]
+                   if x_value[i] == y_value[j] and x_value != y_value)
+        }
 
-                # Caso contrário, adicione valor ao conjunto de valores a serem removidos
-                values_to_remove.add(value)
+        # Cria um conjunto de valores inconsistentes em `self.domains[x]`
+        inconsistent_values = self.domains[x] - consistent_values
 
-        # Remova os valores de self.domains[x]
-        self.domains[x] -= values_to_remove
+        # Se o conjunto de valores consistentes for um subconjunto adequado de `self.domains[x]`,
+        # atualize `self.domains[x]` e retorne True
+        if inconsistent_values:
+            self.domains[x] = consistent_values
+            revised = True
 
-        # Retorna True se algum valor foi removido, False caso contrário
-        return bool(values_to_remove)
-
+        return revised
 
     def ac3(self, arcs=None):
         """
-        Update `self.domains` such that each variable is arc consistent.
-        If `arcs` is None, begin with initial list of all arcs in the problem.
-        Otherwise, use `arcs` as the initial list of arcs to make consistent.
+        Atualize `self.domains` de forma que cada variável seja consistente em arco.
+        Se `arcs` for Nenhum, comece com a lista inicial de todos os arcos do problema.
+        Caso contrário, use `arcs` como a lista inicial de arcos para torná-los consistentes.
 
-        Return True if arc consistency is enforced and no domains are empty;
-        return False if one or more domains end up empty.
+        Retorna True se a consistência do arco for aplicada e nenhum domínio estiver vazio;
+        retorne False se um ou mais domínios ficarem vazios.
         """
-        # Se arcs for None, inicialize-o com todos os arcos possíveis no problema
+        # Inicializa a pilha com todos os arcos se 'arcs' for None
         if arcs is None:
-            arcs = self.arcs
+            # Se 'arcs' for None, cria uma lista de todos os arcos possíveis
+            arcs = [(x, y) for x in self.crossword.variables for y in self.crossword.neighbors(x)]
 
-        for arc in arcs:
-            variable1, variable2 = arc
+        # Inicializa uma fila (deque) com os arcos
+        queue = deque(arcs)
+        # Flag para verificar se ocorreu alguma revisão durante o processo
+        removed = False
 
-        # Crie uma lista de trabalho a partir dos arcos iniciais.
-        work_list = list(arcs)
-        y = None
-
-        # Embora existam arcos na lista de trabalho, destaque o primeiro arco e torne-o consistente
-        while work_list:
-            arc = work_list.pop(0)
-            print(arc)
-            arc = (variable1, variable2)
-            x, y = arc[0], arc[1]
-            if y is None or x != y:
-                for neighbor in self.neighbors[x]:
-                    work_list.append((neighbor, x))
-                if self.revise(x, y):
-
-                        # Se o domínio de x ficar vazio, retorne False
-                        if not self.domains[x]:
-                            return False
-
-                        # Para cada vizinho z de x diferente de y, adicione o arco (z, x) à lista de trabalho.
-                        for z in self.neighbors[x]:
-                            if z != y:
-                                work_list.append((z, x))
-
-            # Se todos os domínios não estiverem vazios, retorne True.
-            return True
+        # Loop principal para processar os arcos na fila
+        while queue:
+            # Remove um arco da fila
+            x, y = queue.popleft()
+            # Chama a função 'revise' para tornar 'x' arc consistente com 'y'
+            if self.revise(x, y):
+                # Se o domínio de 'x' ficar vazio após a revisão, retorna False
+                if not self.domains[x]:
+                    return False
+                # Adiciona os arcos envolvendo os vizinhos de 'x' à fila (exceto o arco atual 'x, y')
+                for z in self.crossword.neighbors(x):
+                    if z != y:
+                        queue.append((z, x))
+                # Marca que houve uma revisão
+                removed = True
+        # Retorna True e um dicionário vazio, indicando que a consistência foi mantida
+        return True, {}
 
     def assignment_complete(self, assignment):
         """
-        Return True if `assignment` is complete (i.e., assigns a value to each
-        crossword variable); return False otherwise.
+        Retorna True se a `atribuição` for concluída (ou seja, atribui um valor a cada
+        variável de palavras cruzadas); retorne False caso contrário.
         """
-        # Itere sobre cada variável nas palavras cruzadas
+        # A tarefa será concluída se cada variável receber um valor no dicionário
+        # de atribuição, e armazena apenas um valor, e teste os conflitos aqui
         for variable in self.crossword.variables:
-
-            # Se a variável não receber um valor na atribuição, retorne False
             if variable not in assignment:
                 return False
 
-        # Se todas as varíaveis receberem um valor na atribuição, retorne True
         return True
-
 
     def consistent(self, assignment):
         """
-        Return True if `assignment` is consistent (i.e., words fit in crossword
-        puzzle without conflicting characters); return False otherwise.
+        Retorna True se `atribuição` for consistente (ou seja, as palavras cabem nas palavras cruzadas
+        quebra-cabeça sem personagens conflitantes); retorne False caso contrário.
         """
-        # Iterar sobre cada um na tarefa
-        for variable in assignment:
-            # Obtém o valor atribuído á variável
-            value = assignment[variable]
+        # Verifica se todas as variáveis estão presentes na atribuição
+        # for variable in self.crossword.variables:
+        #   if variable not in assignment:
+        #       return False
 
-            # Itera sobre cada vizinho da variável
-            for neighbor in variable.neighbors:
-                # Se o vizinho não estiver na tarefa, pule-a
-                if neighbor not in assignment:
+        # Verifica se cada valor atribuído é distinto
+        distinct = set()
+        if len(assignment) != len(set(assignment)):
+            # Se o número de valores únicos no dicionário de atribuição for diferente do número total de atribuições,
+            # então há valores repetidos, o que é inconsistente
+            return False
+
+        # Verifica a consistência do nó
+        for variable, value in assignment.items():
+            # Verifica se o comprimento do valor atribuído à variável é igual ao comprimento da própria variável
+            if len(value) != variable.length:
+                # Se o comprimento não corresponder, a atribuição é inconsistente
+                return False
+            # Adiciona o valor à lista de valores distintos para posterior verificação de conflitos
+            distinct.add(value)
+
+        # Verifica a consistência do arco
+        for variable1, value1 in assignment.items():
+            for variable2, value2 in assignment.items():
+                # Evita comparar uma variável consigo mesma
+                if variable1 == variable2:
                     continue
+                # Obtém as posições de sobreposição entre as duas variáveis
+                overlaps = self.crossword.overlaps.get((variable1, variable2))
+                if overlaps is not None:
+                    i, j = overlaps
+                    # Verifica se os caracteres nas posições de sobreposição são iguais
+                    if value1[i] != value2[j]:
+                        # Se os caracteres não forem iguais, há um conflito e a atribuição é inconsistente
+                        return False
 
-                # Obtém o valor atribuído ao vizinho
-                neighbor_value = assignment[neighbor]
-
-                # Verifica se os valores atribuídos à variável e ao seu vizinho são iguais
-                if value == neighbor_value:
-                    # Se forem iguais, a atribuição é inconsistente
-                    return False
-
-                # Verifica se os comprimentos dos valores atribuídos á variável e ao seu vizinho são diferentes
-                if len(value) != len(neighbor_value):
-                    # Se os comprimentos forem diferentes, a atribuição é inconsistente
-                    return False
-
-        # Se a função não retornou False, a atribuição é consistente
-                return True
-
+        # Se todas as verificações passaram sem retornar False, então a atribuição é consistente
+        return True
 
     def order_domain_values(self, var, assignment):
         """
-        Return a list of values in the domain of `var`, in order by
-        the number of values they rule out for neighboring variables.
-        The first value in the list, for example, should be the one
-        that rules out the fewest values among the neighbors of `var`.
+        Retorna uma lista de valores no domínio de `var`, em ordem por
+        o número de valores que eles excluem para variáveis ​​vizinhas.
+        O primeiro valor da lista, por exemplo, deve ser aquele
+        que exclui o menor número de valores entre os vizinhos de `var`.
         """
-        # Crie um dicionário para armazenar o número de valores descartados por cada valor de domínio
-        values_to_count = {}
+        # Encontre todos os vizinhos da variável fornecida
+        neighbors = self.crossword.neighbors(var)
 
-        # Itera sobre cada valor no domínio de 'var'
-        for value in var.domain:
+        # Faça a tarefa e veja se alguns vizinhos já têm uma palavra atribuída
+        for variable in assignment:
+            # Se a variável estiver em vizinhos e em atribuição, ela já possui valor e não é considerada vizinha
+            if variable in neighbors:
+                neighbors.remove(variable)
 
-            # Inicializa a contagem de valores descartados para 0
-            count = 0
+        # Inicializa uma lista de resultados que serão ordenados de acordo com a heurística (valores menos restritivos)
+        result = []
 
-            # Itera sobre cada vizinho de 'var'
-            for neighbor in var.neighbors:
-                # Se o vizinho não estiver na atribuição, ainda não foi atribuído um valor
-                if neighbor not in assignment:
-                    # Itera sobre cada valor no domínio do vizinho
-                    for neighbor_value in self.crossword.domains[neighbor]:
-                        # Se o vizinho puder assumir o valor atual e o valor atual não for o valor de 'var'
-                        if self.crossword.overlaps[(var.index, neighbor.index)] == value or self.crossword.overlaps[(neighbor.index, var.index)] == neighbor_value:
-                            # Se o vizinho não puder assumir o valor atual, aumente a contagem
-                            count += 1
+        for value in self.domains[var]:
+            ruled_out = 0  # Acompanhe a quantidade de opções no domínio que serão excluídas para variáveis ​​vizinhas
+            # Classifique os vizinhos pelo número de opções em seu domínio que serão excluídas
+            sorted_neighbors = sorted(neighbors, key=lambda x: sum(
+                overlap for overlap in self.crossword.overlaps[x, var]), reverse=True)
 
-            # Armazena a contagem no dicionário
-            values_to_count[value] = count
+            for neighbor in sorted_neighbors:
+                # Se houver uma sobreposição entre as variáveis,
+                # Então um deles não poderá mais ter esse valor de domínio
+                for variable in self.domains[neighbor]:
+                    overlap = self.crossword.overlaps[var, neighbor]
 
-        # Classifica as chaves do dicionário pela contagem correspondente em ordem crescente
-        sorted_values = sorted(values_to_count, key=values_to_count.get)
+                    # Se houver uma sobreposição e os caracteres sobrepostos não forem iguais,
+                    # Então o vizinho não pode ter este valor de domínio
+                    if overlap:
+                        a, b = overlap
+                        if value[a] != variable[b]:
+                            ruled_out += 1
+            # Armazena o valor com a quantidade de opções do domínio que serão excluídas para variáveis ​​vizinhas
+            result.append([value, ruled_out])
 
-        # Return the sorted list of values
-        return sorted_values
+        # Classifica todos os valores pelo número de opções no domínio que serão excluídas para variáveis ​​vizinhas
+        result = sorted(result, key=lambda x: x[1])
 
+        return [i[0] for i in result]  # Retorna apenas a lista de valores, sem o parâmetro Ruled_out
 
     def select_unassigned_variable(self, assignment):
         """
-        Return an unassigned variable not already part of `assignment`.
-        Choose the variable with the minimum number of remaining values
-        in its domain. If there is a tie, choose the variable with the highest
-        degree. If there is a tie, any of the tied variables are acceptable
-        return values.
+        Retorna uma variável não atribuída que ainda não faz parte da `atribuição`.
+        Escolha a variável com o número mínimo de valores restantes
+        em seu domínio. Em caso de empate, escolha a variável com maior
+        grau. Se houver empate, qualquer uma das variáveis ​​empatadas é aceitável
+        valores de retorno.
         """
-        # Cria uma lista de todas as variáveis ​​não atribuídas
-        unassigned_variables = [var for var in self.crossword.variables if var not in assignment]
+        unassigned = set(var for var in self.crossword.variables if var not in assignment)
 
-        # Classifica a lista de variáveis ​​não atribuídas pelo número de valores restantes em seus domínios
-        unassigned_variables.sort(key=lambda var: len(self.domains[var]), reverse=False)
+        # Priorize variáveis ​​com menos valores restantes em seu domínio
+        order = sorted(unassigned, key=lambda var: (len(self.domains[var]), -len(self.crossword.neighbors(var))))
 
-        # Se houver empate, classifique a lista de variáveis ​​​​empatadas pelo seu grau
-        if len(unassigned_variables) > 1:
-            unassigned_variables.sort(key=lambda var: len(self.crossword.neighbors(var)), reverse=True)
-
-        # Retorna a primeira variável da lista ordenada
-        return unassigned_variables[0]
-
+        return order[0]
 
     def backtrack(self, assignment):
         """
-        Using Backtracking Search, take as input a partial assignment for the
-        crossword and return a complete assignment if possible to do so.
-
-        `assignment` is a mapping from variables (keys) to words (values).
-
-        If no assignment is possible, return None.
+        Usando a pesquisa de retrocesso, tome como entrada uma atribuição parcial para o
+        palavras cruzadas e retorne uma tarefa completa, se possível.
+        `atribuição` é um mapeamento de variáveis ​​(chaves) para palavras (valores).
+        Se nenhuma atribuição for possível, retorne None.
         """
-        # Se todas as variáveis tiveram um valor atribuído retorne a atribuição
-        if len(assignment) == len(self.crossword.variables):
+        # Verifica se a atribuição está completa
+        if self.assignment_complete(assignment):
+            # Se estiver completa, retorna a atribuição
+
             return assignment
 
-        # Selecione uma variável não atribuída
+        # Seleciona uma variável não atribuída para atribuir um valor
         var = self.select_unassigned_variable(assignment)
 
-        # Para cada valor no domínio da variável
-        for value in var.domain:
-            # Crie uma cópia da tarefa
-            new_assignment = assignment.copy()
+        # Itera sobre os valores do domínio da variável selecionada, ordenados por algum critério
+        for value in self.order_domain_values(var, assignment):
 
-            # Atribua o valor á variável
-            new_assignment[var] = value
+            # Atribui o valor à variável na atribuição
+            assignment[var] = value
 
-            # Se a tarefa for consistente e completa, devolva-a
-            if self.consistent(new_assignment) and self.assignment_complete(new_assignment):
-                return new_assignment
+            # Verifica se a atribuição atual é consistente
+            if self.consistent(assignment):
 
-            # Se a tarefa não for consistente ou completa, procure recursivamente por uma solução
-            else:
-                solution = self.backtrack(new_assignment)
-                if solution is not None:
-                    return solution
+                # Aplica AC3 para realizar inferências
+                success, inferences = self.ac3(arcs=[(y, var) for y in self.crossword.neighbors(var)])
 
-        # Se nenhum valor para a variável resultar em uma atribuição consistente e completa, retorne None
+                # Se AC3 foi bem-sucedido
+                if success:
+
+                    # Atualiza a atribuição com as inferências
+                    assignment.update(inferences)
+
+                    # Chama recursivamente a função backtrack para continuar a busca
+                    result = self.backtrack(assignment)
+
+                    # Se a busca retornar uma atribuição completa, a retorna
+                    if result is not None:
+
+                        return result
+
+                # Desfaz a atribuição atual antes de tentar o próximo valor
+                assignment.pop(var)
+
+        # Se nenhum valor do domínio leva a uma solução completa, retorna None
+
         return None
+
 
 def main():
 
