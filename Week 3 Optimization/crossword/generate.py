@@ -1,5 +1,6 @@
 import sys
 
+from PIL import Image, ImageDraw, ImageFont
 from crossword import Crossword, Variable
 # from crossword import *
 from collections import deque
@@ -47,10 +48,10 @@ class CrosswordCreator():
             print()
 
     def save(self, assignment, filename):
+
         """
         Salve a tarefa de palavras cruzadas em um arquivo de imagem.
         """
-        from PIL import Image, ImageDraw, ImageFont
         cell_size = 100
         cell_border = 2
         interior_size = cell_size - 2 * cell_border
@@ -80,8 +81,7 @@ class CrosswordCreator():
                     if letters[i][j]:
                         _, _, w, h = draw.textbbox((0, 0), letters[i][j], font=font)
                         draw.text(
-                            (rect[0][0] + ((interior_size - w) / 2),
-                             rect[0][1] + ((interior_size - h) / 2) - 10),
+                            (rect[0][0] + ((interior_size - w) / 2), rect[0][1] + ((interior_size - h) / 2) - 10),
                             letters[i][j], fill="black", font=font
                         )
 
@@ -102,9 +102,9 @@ class CrosswordCreator():
          restrições; neste caso, o comprimento da palavra.)
         """
         # Para cada variável, filtra os valores e o comprimento
-        for variable in self.domains:
-            self.domains[variable] = {value for value in self.domains[variable]
-                                      if len(value) == variable.length}
+        self.domains = {variable: {value for value in self.domains[variable]
+                                if len(value) == variable.length}
+                        for variable in self.domains}
 
     def revise(self, x, y):
         """

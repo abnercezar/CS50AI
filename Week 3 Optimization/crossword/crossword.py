@@ -13,7 +13,7 @@ class Variable():
         for k in range(self.length):
             self.cells.append(
                 (self.i + (k if self.direction == Variable.DOWN else 0),
-                 self.j + (k if self.direction == Variable.ACROSS else 0))
+                self.j + (k if self.direction == Variable.ACROSS else 0))
             )
 
     def __hash__(self):
