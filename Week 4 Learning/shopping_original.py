@@ -1,6 +1,5 @@
 import csv
 import sys
-import numpy as np
 print(sys.argv)  # Isso imprimirá a lista de argumentos passados ao script
 
 
@@ -11,40 +10,17 @@ TEST_SIZE = 0.4
 
 
 def main():
+
     # Check command-line arguments
     if len(sys.argv) != 2:
         print("Usage: python shopping.py <filename>")
         sys.exit("Usage: python shopping.py data")
 
-    # Load data from spreadsheet
+    # Load data from spreadsheet and split into train and test sets
     evidence, labels = load_data(sys.argv[1])
-
-    # Determine sizes for train and test sets
-    total_samples = len(evidence)
-    test_size = 0.1  # 10% for testing, adjust as needed
-    train_size = 0.9
-
-    print(f"Total samples: {total_samples}")
-    print(f"Test size: {test_size}, Train size: {train_size}")
-
-    # Check if total samples are sufficient for splitting
-    if total_samples == 0 or (total_samples * train_size) < 1:
-        print("Número de amostras insuficiente para divisão.")
-        return
-
-    # Split data into train and test sets
     X_train, X_test, y_train, y_test = train_test_split(
-        evidence, labels, test_size=test_size, train_size=train_size, random_state=42
+        evidence, labels, test_size=TEST_SIZE
     )
-
-    print(f"X_train shape: {X_train.shape}, y_train shape: {y_train.shape}")
-    print(f"X_test shape: {X_test.shape}, y_test shape: {y_test.shape}")
-
-    # Convert evidence and labels to NumPy arrays
-    X_train = np.array(X_train)
-    X_test = np.array(X_test)
-    y_train = np.array(y_train)
-    y_test = np.array(y_test)
 
     # Train model and make predictions
     model = train_model(X_train, y_train)
@@ -56,7 +32,6 @@ def main():
     print(f"Incorrect: {(y_test != predictions).sum()}")
     print(f"True Positive Rate: {100 * sensitivity:.2f}%")
     print(f"True Negative Rate: {100 * specificity:.2f}%")
-
 
 
 def load_data(filename):
@@ -108,29 +83,24 @@ def load_data(filename):
         next(reader) # Pule o cabeçalho
 
         for row in reader:
-            # Verifique se a lista row tem pelo menos 19 elementos
-            if len(row) >= 19:
-                # Mapeie VisitorType para valores numéricos
-                visitor_type = visitor_mapping.get(row[8], 0)
-
-                # Mapeie o campo Weekend para 0 ou 1
-                weekend = 1 if row[18] == 'TRUE' else 0
-
-                # Extrair evidência da linha atual
-                current_evidence = [
-                    float(row[0]), float(row[1]), float(row[2]), float(row[3]),
-                    int(row[4]), float(row[5]), float(row[6]), float(row[7]),
-                    float(row[9]), month_mapping[row[10]], int(row[11]),
-                    int(row[12]), int(row[13]), int(row[14]), visitor_type, weekend
+            print("Row:", row)
+        # Extrair evidência da linha atual
+            current_evidence = [
+                float(x) if isinstance(x, str) and x.replace('.', '', 1).isdigit() else x for x in [
+                    row[0], row[2], row[4], row[6],
+                    visitor_mapping.get(row[8], 0),  # Usando o mapeamento para VisitorType
+                    1 if row[9] == 'TRUE' else 0,
+                    month_mapping[row[10]],
+                    *[float(y) if isinstance(y, str) and y.replace('.', '', 1).isdigit() else 0.0 for y in row[11:16] if y != ''] + [0.0] * (6 - len(row[11:16])),
                 ]
+            ]
+            print("Current Evidence:", current_evidence)
 
-                # Adicionar evidência à lista de evidências
-                evidence.append(current_evidence)
+            # Adicionar evidência à lista de evidências
+            evidence.append(current_evidence)
 
-                # Adicionar rótulo à lista de rótulos
-                labels.append(1 if row[17] == 'TRUE' else 0)
-            else:
-                print(f"A linha {row} não possui dados suficientes.")
+            # Adicionar rótulo à lista de rótulos
+            labels.append(1 if row[17] == 'TRUE' else 0)
 
     return evidence, labels
 
@@ -143,14 +113,11 @@ def train_model(evidence, labels):
     # Inicialize o classificador KNeighborsClassifier com k=1
     model = KNeighborsClassifier(n_neighbors=1)
 
-    # Imprima os tipos de dados das variáveis evidence e labels
-    print(f"Tipo de dados de evidence: {type(evidence)}")
-    print(f"Tipo de dados de labels: {type(labels)}")
-
     # Treine o modelo com os dados de evidência e rótulos fornecidos
     model.fit(evidence, labels)
 
     return model
+
 
 def evaluate(labels, predictions):
     """
