@@ -173,7 +173,7 @@ ____
 
 # Semana 3 Otimização
 
-### Palavras Cruzadas
+### Crossword
 ![image](https://github.com/abnercezar/CS50AI/assets/102832541/86adc928-077f-46e5-8b80-f247cd3c45e4)
 
 ### Escreva uma IA para gerar palavras cruzadas.
@@ -187,7 +187,7 @@ ____
 
 # Semana 4 Aprendizado
 
-### Compras
+### Shopping
 ![image](https://github.com/abnercezar/CS50AI/assets/102832541/d7d57afb-4f5f-404b-a566-ce814a7c9788)
 
 ### Escreva uma IA para prever se os clientes de compras online concluirão uma compra.
