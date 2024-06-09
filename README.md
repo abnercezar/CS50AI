@@ -170,6 +170,18 @@ Calcule e retorne uma probabilidade conjunta.
     Atualize as `probabilidades` de modo que cada distribuição de probabilidade
     é normalizado (ou seja, soma 1, com proporções relativas iguais).
 ____
+
+# Semana 3 Palavras Cruzadas
+![image](https://github.com/abnercezar/CS50AI/assets/102832541/86adc928-077f-46e5-8b80-f247cd3c45e4)
+
+### Escreva uma IA para gerar palavras cruzadas.
+Meu desafio maior nesta semana foi que todos os meus testes estavam passando, e meu código estava correto, 
+mas o arquivo `OpensSans-Regular.ttf` não havia sido baixado, junto com a pasta `crossword`, por este motivo ao executar este trecho meu código quebrava.
+
+
+![image](https://github.com/abnercezar/CS50AI/assets/102832541/46ffe2f2-963b-40d8-b44f-d015dd47e943)
+
+____
 ![Thisiscs50](https://github.com/abnercezar/CS50x/assets/102832541/05954b62-d45d-4b1e-bac4-52d3c744cf57)
 
 
