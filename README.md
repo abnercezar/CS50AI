@@ -195,22 +195,21 @@ ____
 Nesta semana a função principal é `load_data`, onde você precisará carregar os dados de compra de um arquivo CSV `filename` e converter-os em uma lista de evidências e uma lista de rótulos. 
  E retornar uma tupla (evidências, rótulos). A evidência deve ser uma lista de listas onde cada lista contém os seguintes valores em ordem:
 - Administrativo, na íntegra
-        * Administrative_Duration, um número de ponto flutuante
-        * Informativo, na íntegra
-        * Informational_Duration, um número de ponto flutuante
-        * ProductRelated, um número inteiro
-        * ProductRelated_Duration, um número de ponto flutuante
-        * BounceRates, um número de ponto flutuante
-        * ExitRates, um número de ponto flutuante
-        * PageValues, um número de ponto flutuante
-        * SpecialDay, um número de ponto flutuante
-        * Mês, um índice de 1 (janeiro) a 12 (dezembro)
-        * Sistemas Operacionais, um número inteiro
-        * Navegador, um número inteiro
-        * Região, um número inteiro
-        * TrafficType, um número inteiro
-        * VisitorType, um número inteiro 1 (Returning_Visitor), 2 (New_Visitor) ou 3 (Outro)
-        * Fim de semana, um número inteiro 0 (se for falso) ou 1 (se for verdadeiro)
+- Administrative_Duration, um número de ponto flutuante
+- Informativo, na íntegra
+- Informational_Duration, um número de ponto flutuante
+- ProductRelated, um número inteiro
+- ProductRelated_Duration, um número de ponto flutuante
+- BounceRates, um número de ponto flutuante
+- ExitRates, um número de ponto flutuante
+- PageValues, um número de ponto flutuante
+- SpecialDay, um número de ponto flutuante
+- Mês, um índice de 1 (janeiro) a 12 (dezembro)
+- Sistemas Operacionais, um número inteiro- Navegador, um número inteiro
+- Região, um número inteiro
+- TrafficType, um número inteiro
+- VisitorType, um número inteiro 1 (Returning_Visitor), 2 (New_Visitor) ou 3 (Outro)
+- Fim de semana, um número inteiro 0 (se for falso) ou 1 (se for verdadeiro)
 
     Os rótulos devem ser a lista correspondente de rótulos, onde cada rótulo
     é 1 se Receita for verdadeira e 0 caso contrário.
