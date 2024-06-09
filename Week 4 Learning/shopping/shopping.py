@@ -33,31 +33,31 @@ def main():
 
 def load_data(filename):
     """
-    Load purchase data from a CSV file `filename` and convert it into a list of
-    lists of evidence and a list of labels. Returns a tuple (evidence, labels).
+    Carregue os dados de compra de um arquivo CSV `filename` e converta-os em uma lista de
+    listas de evidências e uma lista de rótulos. Retorna uma tupla (evidências, rótulos).
 
-    Evidence should be a list of lists, where each list contains the following
-    values in order:
-        - Administrative, in full
-        - Administrative_Duration, a floating-point number
-        - Informational, in full
-        - Informational_Duration, a floating-point number
-        - ProductRelated, an integer
-        - ProductRelated_Duration, a floating-point number
-        - BounceRates, a floating-point number
-        - ExitRates, a floating-point number
-        - PageValues, a floating-point number
-        - SpecialDay, a floating-point number
-        - Month, an index from 1 (January) to 12 (December)
-        - OperatingSystems, an integer
-        - Browser, an integer
-        - Region, an integer
-        - TrafficType, an integer
-        - VisitorType, an integer 1 (Returning_Visitor), 2 (New_Visitor), or 3 (Other)
-        - Weekend, an integer 0 (if false) or 1 (if true)
+    A evidência deve ser uma lista de listas, onde cada lista contém o seguinte
+    valores em ordem:
+        - Administrativo, na íntegra
+        - Administrative_Duration, um número de ponto flutuante
+        - Informativo, na íntegra
+        - Informational_Duration, um número de ponto flutuante
+        - ProductRelated, um número inteiro
+        - ProductRelated_Duration, um número de ponto flutuante
+        - BounceRates, um número de ponto flutuante
+        - ExitRates, um número de ponto flutuante
+        - PageValues, um número de ponto flutuante
+        - SpecialDay, um número de ponto flutuante
+        - Mês, um índice de 1 (janeiro) a 12 (dezembro)
+        - Sistemas Operacionais, um número inteiro
+        - Navegador, um número inteiro
+        - Região, um número inteiro
+        - TrafficType, um número inteiro
+        - VisitorType, um número inteiro 1 (Returning_Visitor), 2 (New_Visitor) ou 3 (Outro)
+        - Fim de semana, um número inteiro 0 (se for falso) ou 1 (se for verdadeiro)
 
-    Labels should be the corresponding list of labels, where each label
-    is 1 if Revenue is true and 0 otherwise.
+    Os rótulos devem ser a lista correspondente de rótulos, onde cada rótulo
+    é 1 se Receita for verdadeira e 0 caso contrário.
     """
 
     # Initialize lists to store evidence and labels
@@ -71,7 +71,7 @@ def load_data(filename):
     }
 
     # Mapeamento para VisitorType
-    visitor_mapping = {'Returning_Visitor': 1, 'New_Visitor': 2, 'Other': 3}
+    visitor_mapping = {'Returning_Visitor': 1, 'New_Visitor': 0, 'Other': 2}
 
     # Abra o arquivo CSV e leia os dados
     with open(filename, 'r') as file:
@@ -79,21 +79,19 @@ def load_data(filename):
         next(reader)  # Pule o cabeçalho
 
         for row in reader:
-            # Verifique se a lista row tem exatamente 18 elementos
-            if len(row) == 18:
+            if len(row) == 18:  # Verifica se a lista row tem exatamente 18 elementos
                 # Mapeie VisitorType para valores numéricos
                 visitor_type = visitor_mapping.get(row[15], 0)
 
                 # Mapeie o campo Weekend para 0 ou 1
-                weekend = 1 if row[17].lower() == 'TRUE' else 0
+                weekend = 1 if row[16].strip().lower() == 'true' else 0
 
                 # Transforme o mês em um número usando month_mapping
-                month_number = month_mapping.get(row[10], 0)  # Usando month_number aqui
-
+                month_number = month_mapping.get(row[10], 0)
 
                 # Extrair evidência da linha atual
                 current_evidence = [
-                    float(row[0]), float(row[1]), float(row[2]), float(row[3]),
+                    int(row[0]), float(row[1]), int(row[2]), float(row[3]),
                     int(row[4]), float(row[5]), float(row[6]), float(row[7]),
                     float(row[8]), float(row[9]), month_number,
                     int(row[11]), int(row[12]), int(row[13]), int(row[14]),
@@ -104,7 +102,7 @@ def load_data(filename):
                 evidence.append(current_evidence)
 
                 # Adicionar rótulo à lista de rótulos
-                labels.append(1 if row[16] == 'TRUE' else 0)
+                labels.append(1 if row[17].strip().lower() == 'true' else 0)
 
     return evidence, labels
 
