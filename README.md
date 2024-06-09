@@ -182,6 +182,54 @@ mas o arquivo `OpensSans-Regular.ttf` não havia sido baixado, junto com a pasta
 ![image](https://github.com/abnercezar/CS50AI/assets/102832541/46ffe2f2-963b-40d8-b44f-d015dd47e943)
 
 ____
+
+# Semana 4 Compras
+![image](https://github.com/abnercezar/CS50AI/assets/102832541/d7d57afb-4f5f-404b-a566-ce814a7c9788)
+
+### Escreva uma IA para prever se os clientes de compras online concluirão uma compra.
+
+Nesta semana a função principal é `load_data`, onde você precisará carregar os dados de compra de um arquivo CSV `filename` e converter-os em uma lista de evidências e uma lista de rótulos. 
+ E retornar uma tupla (evidências, rótulos). A evidência deve ser uma lista de listas onde cada lista contém os seguintes valores em ordem:
+- Administrativo, na íntegra
+        - Administrative_Duration, um número de ponto flutuante
+        - Informativo, na íntegra
+        - Informational_Duration, um número de ponto flutuante
+        - ProductRelated, um número inteiro
+        - ProductRelated_Duration, um número de ponto flutuante
+        - BounceRates, um número de ponto flutuante
+        - ExitRates, um número de ponto flutuante
+        - PageValues, um número de ponto flutuante
+        - SpecialDay, um número de ponto flutuante
+        - Mês, um índice de 1 (janeiro) a 12 (dezembro)
+        - Sistemas Operacionais, um número inteiro
+        - Navegador, um número inteiro
+        - Região, um número inteiro
+        - TrafficType, um número inteiro
+        - VisitorType, um número inteiro 1 (Returning_Visitor), 2 (New_Visitor) ou 3 (Outro)
+        - Fim de semana, um número inteiro 0 (se for falso) ou 1 (se for verdadeiro)
+
+    Os rótulos devem ser a lista correspondente de rótulos, onde cada rótulo
+    é 1 se Receita for verdadeira e 0 caso contrário.
+
+- Você também deverá implementar a fução `train_mode` que fará o seguinte:
+Dada uma lista de listas de evidências e uma lista de rótulos, retorne um
+    modelo ajustado de k-vizinho mais próximo (k = 1) treinado nos dados.
+
+- E deverá implementar por último a função `evaluate` que fará o seguinte:
+Dada uma lista de rótulos reais e uma lista de rótulos previstos,
+    retornar uma tupla (sensibilidade, especificidade).
+
+    Suponha que cada rótulo seja 1 (positivo) ou 0 (negativo).
+
+    `sensibilidade` deve ser um valor de ponto flutuante de 0 a 1
+    representando a "taxa positiva verdadeira": a proporção de
+    rótulos positivos reais que foram identificados com precisão.
+
+    `especificidade` deve ser um valor de ponto flutuante de 0 a 1
+    representando a "taxa verdadeiramente negativa": a proporção de
+    rótulos negativos reais que foram identificados com precisão.
+
+____
 ![Thisiscs50](https://github.com/abnercezar/CS50x/assets/102832541/05954b62-d45d-4b1e-bac4-52d3c744cf57)
 
 
