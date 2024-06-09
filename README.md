@@ -171,7 +171,9 @@ Calcule e retorne uma probabilidade conjunta.
     é normalizado (ou seja, soma 1, com proporções relativas iguais).
 ____
 
-# Semana 3 Palavras Cruzadas
+# Semana 3 Otimização
+
+### Palavras Cruzadas
 ![image](https://github.com/abnercezar/CS50AI/assets/102832541/86adc928-077f-46e5-8b80-f247cd3c45e4)
 
 ### Escreva uma IA para gerar palavras cruzadas.
@@ -183,7 +185,9 @@ mas o arquivo `OpensSans-Regular.ttf` não havia sido baixado, junto com a pasta
 
 ____
 
-# Semana 4 Compras
+# Semana 4 Aprendizado
+
+### Compras
 ![image](https://github.com/abnercezar/CS50AI/assets/102832541/d7d57afb-4f5f-404b-a566-ce814a7c9788)
 
 ### Escreva uma IA para prever se os clientes de compras online concluirão uma compra.
