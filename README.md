@@ -176,50 +176,10 @@ ____
 
 ### Escreva uma IA para gerar palavras cruzadas.
 Meu desafio maior nesta semana foi que todos os meus testes estavam passando, e meu código estava correto, 
-mas o arquivo `OpensSans-Regular.ttf` não havia sido baixado, junto com a pasta `crossword`.
-Ao executar a linha 200 e 201 meu código quebrava.
+mas o arquivo `OpensSans-Regular.ttf` não havia sido baixado, junto com a pasta `crossword`, por este motivo ao executar este trecho meu código quebrava.
 
-```
-def save(self, assignment, filename):
 
-        """
-        Salve a tarefa de palavras cruzadas em um arquivo de imagem.
-        """
-        cell_size = 100
-        cell_border = 2
-        interior_size = cell_size - 2 * cell_border
-        letters = self.letter_grid(assignment)
-
-        # Create a blank canvas
-        img = Image.new(
-            "RGBA",
-            (self.crossword.width * cell_size,
-             self.crossword.height * cell_size),
-            "black"
-        )
-        font = ImageFont.truetype("assets/fonts/OpenSans-Regular.ttf", 80)
-        draw = ImageDraw.Draw(img)
-
-        for i in range(self.crossword.height):
-            for j in range(self.crossword.width):
-
-                rect = [
-                    (j * cell_size + cell_border,
-                     i * cell_size + cell_border),
-                    ((j + 1) * cell_size - cell_border,
-                     (i + 1) * cell_size - cell_border)
-                ]
-                if self.crossword.structure[i][j]:
-                    draw.rectangle(rect, fill="white")
-                    if letters[i][j]:
-                        _, _, w, h = draw.textbbox((0, 0), letters[i][j], font=font)
-                        draw.text(
-                            (rect[0][0] + ((interior_size - w) / 2), rect[0][1] + ((interior_size - h) / 2) - 10),
-                            letters[i][j], fill="black", font=font
-                        )
-
-        img.save(filename)
-```
+![image](https://github.com/abnercezar/CS50AI/assets/102832541/46ffe2f2-963b-40d8-b44f-d015dd47e943)
 
 ____
 ![Thisiscs50](https://github.com/abnercezar/CS50x/assets/102832541/05954b62-d45d-4b1e-bac4-52d3c744cf57)
