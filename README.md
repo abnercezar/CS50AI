@@ -179,6 +179,7 @@ ____
 ### Escreva uma IA para gerar palavras cruzadas.
 Meu desafio maior nesta semana foi que todos os meus testes estavam passando, e meu código estava correto, 
 mas o arquivo `OpensSans-Regular.ttf` não havia sido baixado, junto com a pasta `crossword`, por este motivo ao executar este trecho meu código quebrava.
+Pois ao procurar o arquivo ele não era encontrado no diretório.
 
 
 ![image](https://github.com/abnercezar/CS50AI/assets/102832541/46ffe2f2-963b-40d8-b44f-d015dd47e943)
