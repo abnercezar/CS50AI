@@ -3,7 +3,7 @@
 ![Harvard](https://github.com/abnercezar/CS50x/assets/102832541/96a8e6ab-d1a2-40b0-8b16-21db0b3dbd7e)
 
 ### Site CS50AI: 
-https://cs50.harvard.edu/ai/2023/
+https://cs50.harvard.edu/ai/2024/
 ____
 ## Sobre este curso
 Este curso explora os conceitos e algoritmos que estão na base da inteligência artificial moderna, mergulhando nas ideias que dão origem a tecnologias como motores de jogos, reconhecimento de escrita e tradução automática. Por meio de projetos práticos, os alunos ganham exposição à teoria por trás de algoritmos de busca de gráficos, classificação, otimização, aprendizado de máquina, grandes modelos de linguagem e outros tópicos de inteligência artificial à medida que os incorporam em seus próprios programas Python. Ao final do curso, os alunos adquirem experiência em bibliotecas para aprendizado de máquina, bem como conhecimento dos princípios de inteligência artificial que lhes permitem projetar seus próprios sistemas inteligentes.
