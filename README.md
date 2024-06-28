@@ -232,6 +232,18 @@ Dada uma lista de rótulos reais e uma lista de rótulos previstos,
     `especificidade` deve ser um valor de ponto flutuante de 0 a 1
     representando a "taxa verdadeiramente negativa": a proporção de
     rótulos negativos reais que foram identificados com precisão.
+  ____
+  # Semana 5 Redes Neurais
+
+### Traffic
+![image](https://github.com/abnercezar/CS50AI/assets/102832541/4535daf7-4110-497e-a7e2-855ad1ec7e66)
+
+### Escreva uma IA para identificar qual placa de trânsito aparece em uma fotografia.
+À medida que a investigação continua no desenvolvimento de carros autónomos, um dos principais desafios é a visão computacional , permitindo que estes carros desenvolvam uma compreensão do seu ambiente a partir de imagens digitais. Em particular, isto envolve a capacidade de reconhecer e distinguir sinais de trânsito – sinais de parada, sinais de limite de velocidade, sinais de rendimento e muito mais.
+
+Neste projeto, você usará o TensorFlow para construir uma rede neural para classificar placas de trânsito com base em uma imagem dessas placas. Para fazer isso, você precisará de um conjunto de dados rotulado: uma coleção de imagens que já foram categorizadas pela placa de trânsito representada nelas.
+
+Existem vários conjuntos de dados desse tipo, mas para este projeto, usaremos o conjunto de dados do German Traffic Sign Recognition Benchmark (GTSRB), que contém milhares de imagens de 43 tipos diferentes de placas de trânsito.
 
 ____
 ![Thisiscs50](https://github.com/abnercezar/CS50x/assets/102832541/05954b62-d45d-4b1e-bac4-52d3c744cf57)
