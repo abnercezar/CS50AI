@@ -234,6 +234,7 @@ Dada uma lista de rótulos reais e uma lista de rótulos previstos,
     rótulos negativos reais que foram identificados com precisão.
 
   ### Nim
+  
   ![image](https://github.com/abnercezar/CS50AI/assets/102832541/58bee81b-05fb-40ec-82b6-4907bd1e6964)
 
   ### Escreva uma IA que aprenda a jogar Nim por meio de aprendizado por reforço.
