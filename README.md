@@ -232,6 +232,26 @@ Dada uma lista de rótulos reais e uma lista de rótulos previstos,
     `especificidade` deve ser um valor de ponto flutuante de 0 a 1
     representando a "taxa verdadeiramente negativa": a proporção de
     rótulos negativos reais que foram identificados com precisão.
+
+  ### Nim
+  ![image](https://github.com/abnercezar/CS50AI/assets/102832541/58bee81b-05fb-40ec-82b6-4907bd1e6964)
+
+  ### Escreva uma IA que aprenda a jogar Nim por meio de aprendizado por reforço.
+
+  Lembre-se de que no jogo Nim, começamos com um certo número de pilhas,
+  cada uma com um certo número de objetos. Os jogadores se revezam: na vez de um jogador,
+  o jogador remove qualquer número não negativo de objetos de qualquer pilha não vazia. Quem remover o último objeto perde.
+
+  Há uma estratégia simples que você pode imaginar para este jogo: se houver apenas uma pilha e três objetos restantes nela, 
+  e for sua vez, sua melhor aposta é remover dois desses objetos, deixando seu oponente com o terceiro e último objeto para remover. 
+  Mas se houver mais pilhas, a estratégia fica consideravelmente mais complicada. Neste problema, construiremos uma IA para aprender a 
+  estratégia para este jogo por meio de aprendizado por reforço.
+  Ao jogar contra si mesma repetidamente e aprender com a experiência, eventualmente nossa IA aprenderá quais ações tomar e quais evitar.
+
+  Neste projeto você precisará implementar as funções `get_q_value`, `update_q_value`, `best_future_reward` e `choose_action` em nim.py.
+  Para cada uma dessas funções, sempre que uma função aceitar a statecomo entrada, você pode assumir que é uma lista de inteiros.
+  Sempre que uma função aceita uma actionentrada, você pode assumir que é um par inteiro (i, j)de uma pilha ie um número de objetos j.
+
   ____
   # Semana 5 Redes Neurais
 
