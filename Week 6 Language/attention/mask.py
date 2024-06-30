@@ -1,8 +1,10 @@
-import sys
-import tensorflow as tf
-
-from PIL import Image, ImageDraw, ImageFont
 from transformers import AutoTokenizer, TFBertForMaskedLM
+from PIL import Image, ImageDraw, ImageFont
+import tensorflow as tf
+import sys
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+
 
 # Pre-trained masked language model
 MODEL = "bert-base-uncased"
@@ -42,52 +44,61 @@ def main():
 
 def get_mask_token_index(mask_token_id, inputs):
     """
-    Return the index of the token with the specified `mask_token_id`, or
-    `None` if not present in the `inputs`.
+    Retorne o índice do token com o `mask_token_id` especificado ou
+    `None` se não estiver presente nas `entradas`.
     """
-    # TODO: Implement this function
-    raise NotImplementedError
-
+    # Encontre o índice do primeiro token que corresponde ao mask_token_id ou None se não encontrar
+    return next((i for i, token in enumerate(inputs.input_ids[0]) if token == mask_token_id), None)
 
 
 def get_color_for_attention_score(attention_score):
     """
-    Return a tuple of three integers representing a shade of gray for the
-    given `attention_score`. Each value should be in the range [0, 255].
+    Retorna uma tupla de três inteiros representando um tom de cinza para o
+    dado `atenção_pontuação`. Cada valor deve estar no intervalo [0, 255].
     """
-    # TODO: Implement this function
-    raise NotImplementedError
+    # Converte a pontuação de atenção para um numpy array.
+    attention_score = attention_score.numpy()
 
+    # Retorna uma tupla onde cada elemento é a pontuação de atenção multiplicada por 255 e arredondada.
+    # Isso é feito para converter a pontuação de atenção em um valor de cor RGB.
+    return tuple(map(lambda x: round(x * 255), [attention_score] * 3))
 
 
 def visualize_attentions(tokens, attentions):
     """
-    Produce a graphical representation of self-attention scores.
+    Produza uma representação gráfica das pontuações de autoatenção.
 
-    For each attention layer, one diagram should be generated for each
-    attention head in the layer. Each diagram should include the list of
-    `tokens` in the sentence. The filename for each diagram should
-    include both the layer number (starting count from 1) and head number
-    (starting count from 1).
+    Para cada camada de atenção, um diagrama deve ser gerado para cada
+    cabeça de atenção na camada. Cada diagrama deve incluir a lista de
+    `tokens` na frase. O nome do arquivo para cada diagrama deve
+    inclua o número da camada (começando em 1) e o número da cabeça
+    (começando a contar a partir de 1).
     """
-    # TODO: Update this function to produce diagrams for all layers and heads.
-    generate_diagram(
-        1,
-        1,
-        tokens,
-        attentions[0][0][0]
-    )
+    # Para cada índice (i) e camada na lista de atenções...
+    for i, layer in enumerate(attentions):
+
+        # Para cada cabeça na primeira camada...
+        for k, _ in enumerate(layer[0]):
+
+            # Gera um diagrama para a camada e cabeça atual,
+            # usando os tokens e a atenção correspondente.
+            generate_diagram(
+                i + 1,         # Número da camada
+                k + 1,         # Número da cabeça
+                tokens,        # Tokens
+                layer[0][k]    # Atenção correspondente
+            )
 
 
 def generate_diagram(layer_number, head_number, tokens, attention_weights):
     """
-    Generate a diagram representing the self-attention scores for a single
-    attention head. The diagram shows one row and column for each of the
-    `tokens`, and cells are shaded based on `attention_weights`, with lighter
-    cells corresponding to higher attention scores.
+    Gere um diagrama representando as pontuações de autoatenção para um único
+    cabeça de atenção. O diagrama mostra uma linha e uma coluna para cada um dos
+    `tokens`, e as células são sombreadas com base em `attention_weights`, com tons mais claros
+    células correspondentes a pontuações de atenção mais altas.
 
-    The diagram is saved with a filename that includes both the `layer_number`
-    and `head_number`.
+    O diagrama é salvo com um nome de arquivo que inclui `layer_number`
+    e `head_number`.
     """
     # Create new image
     image_size = GRID_SIZE * len(tokens) + PIXELS_PER_WORD
