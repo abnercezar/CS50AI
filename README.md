@@ -2,6 +2,11 @@
 ### Introdução do CS50 à Inteligência Artificial com Python
 ![Harvard](https://github.com/abnercezar/CS50x/assets/102832541/96a8e6ab-d1a2-40b0-8b16-21db0b3dbd7e)
 
+____
+
+![image](https://github.com/abnercezar/CS50AI/assets/102832541/c2cb3035-53d8-4242-b6b9-0f60e01b2500)
+
+
 ### Site CS50AI: 
 https://cs50.harvard.edu/ai/2024/
 ____
@@ -280,6 +285,19 @@ O projeto "Parser" do CS50AI é sobre processamento de linguagem natural (PNL). 
 #### Desafio:
 O maior desafio neste projeto foi na função `def np_chunk(tree):`, onde o identificador de sintagmas nominais não estava corretamente identificando aqueles que não continham outros sintagmas nominais. Isso ocorreu devido à formulação da gramática ou à análise da frase.
 
+____
+### Attention
+![image](https://github.com/abnercezar/CS50AI/assets/102832541/7006df01-c454-4b94-89bf-8e210d1a19a4)
+
+### Escreva uma IA para prever uma palavra mascarada em uma sequência de texto.
+
+Uma maneira de criar modelos de linguagem é construir um Modelo de Linguagem Mascarado, onde um modelo de linguagem é treinado para prever uma palavra “mascarada” que está faltando em uma sequência de texto. BERT é um modelo de linguagem baseado em transformador desenvolvido pelo Google, e foi treinado com esta abordagem: o modelo de linguagem foi treinado para prever uma palavra mascarada com base nas palavras do contexto circundante.
+
+O BERT usa uma arquitetura de transformador e, portanto, usa um mecanismo de atenção para entender a linguagem. No modelo base do BERT, o transformador usa 12 camadas, onde cada camada tem 12 cabeças de autoatenção, para um total de 144 cabeças de autoatenção.
+
+Neste projeto você precisará implementar as funções `get_mask_token_index`, `get_color_for_attention_score` e `visualize_attentions`!
+
+Dentro do attentiondiretório, execute `pip3 install -r requirements.txt` para instalar as dependências deste projeto.
 
 ____
 ![Thisiscs50](https://github.com/abnercezar/CS50x/assets/102832541/05954b62-d45d-4b1e-bac4-52d3c744cf57)
