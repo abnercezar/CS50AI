@@ -285,6 +285,9 @@ O projeto "Parser" do CS50AI é sobre processamento de linguagem natural (PNL). 
 #### Desafio:
 O maior desafio neste projeto foi na função `def np_chunk(tree):`, onde o identificador de sintagmas nominais não estava corretamente identificando aqueles que não continham outros sintagmas nominais. Isso ocorreu devido à formulação da gramática ou à análise da frase.
 
+------
+### Attention
+
 
 ____
 ![Thisiscs50](https://github.com/abnercezar/CS50x/assets/102832541/05954b62-d45d-4b1e-bac4-52d3c744cf57)
