@@ -267,6 +267,21 @@ Neste projeto, você usará o TensorFlow para construir uma rede neural para cla
 Existem vários conjuntos de dados desse tipo, mas para este projeto, usaremos o conjunto de dados do German Traffic Sign Recognition Benchmark (GTSRB), que contém milhares de imagens de 43 tipos diferentes de placas de trânsito.
 
 ____
+
+# Semana 6 Linguagem
+
+### Parser
+![image](https://github.com/abnercezar/CS50AI/assets/102832541/55a5e542-2092-4e56-b909-6c9c1b7f9ccf)
+
+### Escreva uma IA para analisar frases e extrair sintagmas nominais.
+
+O projeto "Parser" do CS50AI é sobre processamento de linguagem natural (PNL). Ele envolve a construção de um “analisador de árvore sintática” que pode identificar a estrutura gramatical de uma frase em inglês. O objetivo é identificar "frases nominais" (NP) na frase, que são grupos de palavras que funcionam como um substantivo. O projeto usa a biblioteca NLTK (Natural Language Toolkit) do Python para tokenizar a frase e construir a árvore sintática.
+
+#### Desafio:
+O maior desafio neste projeto foi na função `def np_chunk(tree):`, onde o identificador de sintagmas nominais não estava corretamente identificando aqueles que não continham outros sintagmas nominais. Isso ocorreu devido à formulação da gramática ou à análise da frase.
+
+
+____
 ![Thisiscs50](https://github.com/abnercezar/CS50x/assets/102832541/05954b62-d45d-4b1e-bac4-52d3c744cf57)
 
 
