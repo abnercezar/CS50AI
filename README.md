@@ -275,7 +275,7 @@ ____
 
 ### Escreva uma IA para analisar frases e extrair sintagmas nominais.
 
-O projeto "Parse" do CS50AI é sobre processamento de linguagem natural (PNL). Ele envolve a construção de um “analisador de árvore sintática” que pode identificar a estrutura gramatical de uma frase em inglês. O objetivo é identificar "frases nominais" (NP) na frase, que são grupos de palavras que funcionam como um substantivo. O projeto usa a biblioteca NLTK (Natural Language Toolkit) do Python para tokenizar a frase e construir a árvore sintática.
+O projeto "Parser" do CS50AI é sobre processamento de linguagem natural (PNL). Ele envolve a construção de um “analisador de árvore sintática” que pode identificar a estrutura gramatical de uma frase em inglês. O objetivo é identificar "frases nominais" (NP) na frase, que são grupos de palavras que funcionam como um substantivo. O projeto usa a biblioteca NLTK (Natural Language Toolkit) do Python para tokenizar a frase e construir a árvore sintática.
 
 #### Desafio:
 O maior desafio neste projeto foi na função `def np_chunk(tree):`, onde o identificador de sintagmas nominais não estava corretamente identificando aqueles que não continham outros sintagmas nominais. Isso ocorreu devido à formulação da gramática ou à análise da frase.
