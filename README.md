@@ -2,6 +2,11 @@
 ### Introdução do CS50 à Inteligência Artificial com Python
 ![Harvard](https://github.com/abnercezar/CS50x/assets/102832541/96a8e6ab-d1a2-40b0-8b16-21db0b3dbd7e)
 
+____
+
+![image](https://github.com/abnercezar/CS50AI/assets/102832541/c2cb3035-53d8-4242-b6b9-0f60e01b2500)
+
+
 ### Site CS50AI: 
 https://cs50.harvard.edu/ai/2024/
 ____
